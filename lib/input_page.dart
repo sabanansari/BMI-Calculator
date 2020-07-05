@@ -18,6 +18,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   int height = 180;
+  int weight = 60;
+  int age = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +41,15 @@ class _InputPageState extends State<InputPage> {
                   });
                 },
                 cardChild: GenderCard(FontAwesomeIcons.mars, 'MALE'),
-                colour: selectedGender == Gender.male
+                colour: (selectedGender == Gender.male
                     ? kActiveCardColour
-                    : kInactiveCardColour,
+                    : kInactiveCardColour),
               )),
               Expanded(
                   child: BlackCard(
                 onPress: () {
                   setState(() {
-                    selectedGender = Gender.male;
+                    selectedGender = Gender.female;
                   });
                 },
                 cardChild: GenderCard(FontAwesomeIcons.venus, 'FEMALE'),
@@ -114,10 +116,70 @@ class _InputPageState extends State<InputPage> {
               Expanded(
                   child: BlackCard(
                 colour: kActiveCardColour,
+                cardChild: Column(
+                  children: <Widget>[
+                    Text(
+                      'WEIGHT',
+                      style: kLabelTextStyle,
+                    ),
+                    Text(
+                      weight.toString(),
+                      style: kNumberTextStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RoundIconButton(FontAwesomeIcons.minus, () {
+                          setState(() {
+                            weight--;
+                          });
+                        }),
+                        SizedBox(
+                          width: 12.0,
+                        ),
+                        RoundIconButton(FontAwesomeIcons.plus, () {
+                          setState(() {
+                            weight++;
+                          });
+                        })
+                      ],
+                    )
+                  ],
+                ),
               )),
               Expanded(
                   child: BlackCard(
                 colour: kActiveCardColour,
+                cardChild: Column(
+                  children: <Widget>[
+                    Text(
+                      'AGE',
+                      style: kLabelTextStyle,
+                    ),
+                    Text(
+                      age.toString(),
+                      style: kNumberTextStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RoundIconButton(FontAwesomeIcons.minus, () {
+                          setState(() {
+                            age--;
+                          });
+                        }),
+                        SizedBox(
+                          width: 12.0,
+                        ),
+                        RoundIconButton(FontAwesomeIcons.plus, () {
+                          setState(() {
+                            age++;
+                          });
+                        }),
+                      ],
+                    )
+                  ],
+                ),
               )),
             ],
           )),
@@ -129,6 +191,25 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       ),
+    );
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  final IconData icon;
+  final Function onPressed;
+  RoundIconButton(this.icon, this.onPressed);
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: onPressed,
+      child: Icon(icon),
+      constraints: BoxConstraints.tightFor(
+        width: 50.0,
+        height: 50.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
     );
   }
 }
